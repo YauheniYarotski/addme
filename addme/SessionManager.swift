@@ -17,6 +17,7 @@ class SessionManager : NSObject {
     var delegate : SessionManagerDelegate?
     let me = Person(name: "Yauheni", contacts: ["fb":"https://www.facebook.com/yauheniYarotski", "vk":"https://vk.com/yauheni_yarotski"], image: nil)
     var outsidePersons = [Person]()
+    var timer: NSTimer!
     
     override init() {
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: ColorServiceType)
@@ -30,7 +31,9 @@ class SessionManager : NSObject {
         
         self.serviceBrowser.delegate = self
         self.serviceBrowser.startBrowsingForPeers()
-    }
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(SessionManager.tick), userInfo: nil, repeats: true)
+            }
     
     deinit {
         self.serviceAdvertiser.stopAdvertisingPeer()
@@ -54,6 +57,14 @@ class SessionManager : NSObject {
                 NSLog("%@", "\(error)")
             }
         }
+    }
+    
+    //MARK: - Timer
+    
+    func tick() {
+        self.serviceAdvertiser.startAdvertisingPeer()
+        self.serviceBrowser.startBrowsingForPeers()
+        
     }
     
 }
@@ -81,7 +92,7 @@ extension SessionManager : MCNearbyServiceBrowserDelegate {
     func browser(browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         NSLog("%@", "foundPeer: \(peerID)")
         NSLog("%@", "invitePeer: \(peerID)")
-        browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 30)
+        browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 10)
     }
     
     func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
