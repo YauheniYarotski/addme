@@ -4,7 +4,7 @@ import MultipeerConnectivity
 protocol SessionManagerDelegate {
     
     func connectedDevicesChanged(manager : SessionManager, connectedDevices: [String])
-    func colorChanged(manager : SessionManager, colorString: String)
+    func didRecivePerson(manager: SessionManager, person: Person)
     
 }
 
@@ -15,6 +15,8 @@ class SessionManager : NSObject {
     let serviceAdvertiser : MCNearbyServiceAdvertiser
     let serviceBrowser : MCNearbyServiceBrowser
     var delegate : SessionManagerDelegate?
+    let me = Person(name: "Yauheni", contacts: ["fb":"https://www.facebook.com/yauheniYarotski", "vk":"https://vk.com/yauheni_yarotski"], image: nil)
+    var outsidePersons = [Person]()
     
     override init() {
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: ColorServiceType)
@@ -41,21 +43,17 @@ class SessionManager : NSObject {
         return session
     }()
     
-    func sendColor(colorName : String) {
-        NSLog("%@", "sendColor: \(colorName)")
-        
+    func sendMyContact() {
         if session.connectedPeers.count > 0 {
             var error : NSError?
             do {
-                let data = "https://www.facebook.com/yauheniYarotski".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-                var dict =
-                    try self.session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+                let data = NSKeyedArchiver.archivedDataWithRootObject(me)
+                try self.session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
             } catch var error1 as NSError {
                 error = error1
                 NSLog("%@", "\(error)")
             }
         }
-        
     }
     
 }
@@ -83,7 +81,7 @@ extension SessionManager : MCNearbyServiceBrowserDelegate {
     func browser(browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         NSLog("%@", "foundPeer: \(peerID)")
         NSLog("%@", "invitePeer: \(peerID)")
-        browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 5)
+        browser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: 30)
     }
     
     func browser(browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -114,9 +112,10 @@ extension SessionManager : MCSessionDelegate {
     
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
         NSLog("%@", "didReceiveData: \(data.length) bytes")
-        let str = NSString(data: data, encoding: NSUTF8StringEncoding) as! String
-        NSDictionary()
-        self.delegate?.colorChanged(self, colorString: str)
+        if let person = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Person {
+            outsidePersons.append(person)
+            self.delegate?.didRecivePerson(self, person: person)
+        }
     }
     
     func session(session: MCSession, didReceiveStream stream: NSInputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
