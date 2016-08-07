@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "ig.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "телеграм.pdf",
       "scale" : "2x"
     },
     {

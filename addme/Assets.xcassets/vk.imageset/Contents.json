@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "vk .png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "vk logo.pdf",
       "scale" : "2x"
     },
     {

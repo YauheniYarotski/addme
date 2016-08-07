@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StartTableVC: UITableViewController {
+class StartTableVC: UITableViewController, ContactsVCDelegate {
     
     let sessionManager = SessionManager()
     var persons = [Person]()
@@ -21,10 +21,10 @@ class StartTableVC: UITableViewController {
     }
     
     func loadPersones() {
-        let person1 = Person(name: "Yauheni Dzemiashkevich", contacts: ["fb" : "http://facebook.com"], image: UIImage(named: "avatar"), descriptionName: "iOS Developre at Add Me" )
-        let person2 = Person(name: "Yauheni Yarotski", contacts: ["fb" : "http://facebook.com"], image: UIImage(named: "avatar2"), descriptionName: "iOS Developre at Add Me")
-        let person3 = Person(name: "Alex Cvirko", contacts: ["fb" : "http://facebook.com"], image: UIImage(named: "avatar3"), descriptionName: "Designer at Add Me")
-        let person4 = Person(name: "Vladimir Hudnitski", contacts: ["fb" : "http://facebook.com"], image: UIImage(named: "avatar4"), descriptionName: "Android Developre at RubyRoid Labs")
+        let person1 = Person(name: "Yauheni Dzemiashkevich", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar"), descriptionName: "iOS Developre at Add Me" )
+        let person2 = Person(name: "Yauheni Yarotski", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar2"), descriptionName: "iOS Developre at Add Me")
+        let person3 = Person(name: "Alex Cvirko", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar3"), descriptionName: "Designer at Add Me")
+        let person4 = Person(name: "Vladimir Hudnitski", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar4"), descriptionName: "Android Developre at RubyRoid Labs")
         persons = [person1, person2, person3, person4]
     }
 
@@ -54,6 +54,25 @@ class StartTableVC: UITableViewController {
         cell.descriptionName.text = person.descriptionName
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let person = persons[indexPath.row]
+        
+        guard let contactsVC = self.storyboard?.instantiateViewControllerWithIdentifier("ContactsVC") as? ContactsVC
+            else {return}
+        contactsVC.sessionManager = sessionManager
+        contactsVC.person = person
+        contactsVC.delegate = self
+        
+        navigationController?.pushViewController(contactsVC, animated: true)
+        
+    }
+    
+    // MARK: - ContactsVCDelegate
+    
+    func contactsVCDidFinish(contactsVC: ContactsVC) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
 
@@ -116,8 +135,8 @@ extension StartTableVC : SessionManagerDelegate {
     func didRecivePerson(manager: SessionManager, person: Person) {
         NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
             print(person.name, person.contacts)
-            let url = NSURL(string: person.contacts["fb"]!)!
-            UIApplication.sharedApplication().openURL(url)
+//            let url = NSURL(string: person.contacts["fb"]!)!
+//            UIApplication.sharedApplication().openURL(url)
         }
     }
     

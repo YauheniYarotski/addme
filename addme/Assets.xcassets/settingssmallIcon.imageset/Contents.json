@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "settingssmallIcon.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "instagram.pdf",
       "scale" : "2x"
     },
     {
