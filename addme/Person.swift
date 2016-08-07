@@ -7,6 +7,7 @@ class Person: NSObject, NSCoding {
     var image: UIImage?
     var contacts = ContactsType()
      typealias ContactsType = [Contact]
+    var added = false
     
     init(name: String, contacts: ContactsType, image: UIImage?, descriptionName: String) {
         super.init()

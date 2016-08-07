@@ -23,11 +23,27 @@ class SessionManager : NSObject {
     
     
     static private let fackePrsones: [Person] = {
-        let person1 = Person(name: "Yauheni Dzemiashkevich", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar"), descriptionName: "iOS Developre at Add Me" )
-        let person2 = Person(name: "Yauheni Yarotski", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar2"), descriptionName: "iOS Developre at Add Me")
-        let person3 = Person(name: "Alex Cvirko", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar3"), descriptionName: "Designer at Add Me")
-        let person4 = Person(name: "Vladimir Hudnitski", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar4"), descriptionName: "Android Developre at RubyRoid Labs")
-        return [person1, person2, person3, person4]
+        let person1 = Person(name: "Yauheni Dzemiashkevich", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com"), Contact(name:"ig", url: "http://facebook.com")],  image: UIImage(named: "avatar"), descriptionName: "iOS Developre at Add Me" )
+        
+        let person2 = Person(name: "Yauheni Yarotski", contacts: [Contact(name:"ig", url: "http://facebook.com"), Contact(name:"g+", url: "http://facebook.com"), Contact(name:"g+", url: "http://facebook.com")], image: UIImage(named: "avatar2"), descriptionName: "iOS Developre at Add Me")
+        
+        let person3 = Person(name: "Alex Cvirko", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"sk", url: "http://facebook.com")], image: UIImage(named: "avatar3"), descriptionName: "Designer at Add Me")
+        
+        let person4 = Person(name: "Vladimir Hudnitski", contacts: [Contact(name:"vk", url: "http://facebook.com"), Contact(name:"sk", url: "http://facebook.com")], image: UIImage(named: "avatar4"), descriptionName: "Android Developre at RubyRoid Labs")
+        
+        let person5 = Person(name: "Nikolay Petrovich", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"g+", url: "http://facebook.com")], image: UIImage(named: "avatar5"), descriptionName: "iOS Developre at Add Me" )
+        
+        let person6 = Person(name: "Valeriy Yarotski", contacts: [Contact(name:"tw", url: "http://facebook.com"), Contact(name:"tm", url: "http://facebook.com")], image: UIImage(named: "avatar6"), descriptionName: "iOS Developre at Add Me")
+        
+        let person7 = Person(name: "Alex Sygonyako", contacts: [Contact(name:"ig", url: "http://facebook.com"), Contact(name:"tm", url: "http://facebook.com")], image: UIImage(named: "avatar7"), descriptionName: "Designer at Add Me")
+        
+        let person8 = Person(name: "Vladimir Bernatsky", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"sk", url: "http://facebook.com")], image: UIImage(named: "avatar8"), descriptionName: "Android Developre at RubyRoid Labs")
+        
+        let person9 = Person(name: "Yauheni Bernatsky", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"ig", url: "http://facebook.com")], image: UIImage(named: "avatar9"), descriptionName: "iOS Developre at Add Me" )
+        
+        let person10 = Person(name: "Mark Prise", contacts: [Contact(name:"sk", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar10"), descriptionName: "iOS Developre at Add Me")
+        
+        return [person1, person2, person3, person4, person5, person6, person7, person8, person9, person10]
     }()
     
     static func randRange (lower: Int , upper: Int) -> Int {
@@ -135,7 +151,7 @@ extension SessionManager : MCSessionDelegate {
         NSLog("%@", "peer \(peerID) didChangeState: \(state.stringValue())")
         if state == .NotConnected {
             if outsidePersons.count > 0 {
-                outsidePersons.removeLast()
+//                outsidePersons.removeLast()
             }
             self.delegate?.didDiconectDevice(self)
         }

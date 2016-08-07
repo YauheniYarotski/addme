@@ -45,10 +45,18 @@ class StartTableVC: UITableViewController, ContactsVCDelegate {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("personsCell", forIndexPath: indexPath) as! StartCell
         let persons = sessionManager.outsidePersons
+        if persons.indices.contains(indexPath.row) {
         let person = persons[indexPath.row]
         cell.name.text = person.name
         cell.avatar.image = person.image
-        cell.descriptionName.text = person.descriptionName
+            cell.descriptionName.text = person.descriptionName
+            
+            if person.added {
+            cell.accessoryType = .Checkmark
+            } else {
+                cell.accessoryType = .DisclosureIndicator
+            }
+        }
         
         return cell
     }
@@ -69,7 +77,9 @@ class StartTableVC: UITableViewController, ContactsVCDelegate {
     // MARK: - ContactsVCDelegate
     
     func contactsVCDidFinish(contactsVC: ContactsVC) {
-        dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.popViewControllerAnimated(true)
+        tableView.reloadData()
+        
     }
     
     
@@ -140,7 +150,7 @@ extension StartTableVC : SessionManagerDelegate {
     
     func didDiconectDevice(manage: SessionManager) {
         NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
-            tableView.reloadData()
+//            self.tableView.reloadData()
         }
     }
     

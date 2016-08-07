@@ -31,6 +31,22 @@ class ContactsVC: UITableViewController {
         , ("Verizon Wireless", "Sponsered")
     ]
     
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("personsCell2", forIndexPath: indexPath) as! StartCell
+
+
+            cell.name.text = person.name
+            cell.avatar.image = person.image
+            cell.descriptionName.text = person.descriptionName
+        
+        
+        
+        return cell
+
+    }
+    
+    
+    
     //    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
     //
     //        if indexPath.section == 1 {
@@ -70,5 +86,10 @@ extension ContactsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        person.added = true
+        delegate?.contactsVCDidFinish(self)
     }
 }
