@@ -15,7 +15,7 @@ class SessionManager : NSObject {
     let serviceAdvertiser : MCNearbyServiceAdvertiser
     let serviceBrowser : MCNearbyServiceBrowser
     var delegate : SessionManagerDelegate?
-    let me = Person(name: "Yauheni", contacts: ["fb":"https://www.facebook.com/yauheniYarotski", "vk":"https://vk.com/yauheni_yarotski"], image: nil)
+    let me = Person(name: "Yauheni", contacts: ["fb":"https://www.facebook.com/yauheniYarotski", "vk":"https://vk.com/yauheni_yarotski"], image: nil, descriptionName: "iOS Developer")
     var outsidePersons = [Person]()
     var timer: NSTimer!
     
