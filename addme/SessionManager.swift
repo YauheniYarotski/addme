@@ -5,6 +5,8 @@ protocol SessionManagerDelegate {
     
     func connectedDevicesChanged(manager : SessionManager, connectedDevices: [String])
     func didRecivePerson(manager: SessionManager, person: Person)
+//    func didConnectDevice(manage: SessionManager, devicePerson: Person)
+    func didDiconectDevice(manage: SessionManager)
     
 }
 
@@ -15,9 +17,22 @@ class SessionManager : NSObject {
     let serviceAdvertiser : MCNearbyServiceAdvertiser
     let serviceBrowser : MCNearbyServiceBrowser
     var delegate : SessionManagerDelegate?
-    let me = Person(name: "Yauheni", contacts: [Contact(name:"fb", url:"https://www.facebook.com/yauheniYarotski"), Contact(name:"vk", url:"https://vk.com/yauheni_yarotski")], image: nil, descriptionName: "iOS Developer")
+    let me = fackePrsones[SessionManager.randRange(0, upper: fackePrsones.count - 1)]
     var outsidePersons = [Person]()
     var timer: NSTimer!
+    
+    
+    static private let fackePrsones: [Person] = {
+        let person1 = Person(name: "Yauheni Dzemiashkevich", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar"), descriptionName: "iOS Developre at Add Me" )
+        let person2 = Person(name: "Yauheni Yarotski", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar2"), descriptionName: "iOS Developre at Add Me")
+        let person3 = Person(name: "Alex Cvirko", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar3"), descriptionName: "Designer at Add Me")
+        let person4 = Person(name: "Vladimir Hudnitski", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar4"), descriptionName: "Android Developre at RubyRoid Labs")
+        return [person1, person2, person3, person4]
+    }()
+    
+    static func randRange (lower: Int , upper: Int) -> Int {
+        return lower + Int(arc4random_uniform(UInt32(upper - lower + 1)))
+    }
     
     override init() {
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: ColorServiceType)
@@ -118,13 +133,21 @@ extension SessionManager : MCSessionDelegate {
     
     func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
         NSLog("%@", "peer \(peerID) didChangeState: \(state.stringValue())")
+        if state == .NotConnected {
+            if outsidePersons.count > 0 {
+                outsidePersons.removeLast()
+            }
+            self.delegate?.didDiconectDevice(self)
+        }
         self.delegate?.connectedDevicesChanged(self, connectedDevices: session.connectedPeers.map({$0.displayName}))
     }
+    
     
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
         NSLog("%@", "didReceiveData: \(data.length) bytes")
         if let person = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Person {
-            outsidePersons.append(person)
+            if !outsidePersons.contains(person) {
+                outsidePersons.append(person)}
             self.delegate?.didRecivePerson(self, person: person)
         }
     }

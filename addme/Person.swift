@@ -16,6 +16,14 @@ class Person: NSObject, NSCoding {
         self.image = image
     }
     
+    override func isEqual(object: AnyObject?) -> Bool {
+        if let newPerson = object as? Person {
+            return self.name == newPerson.name
+        } else {
+            return false
+        }
+    }
+    
     //MARK: - NSCoding
     
     required convenience init?(coder aDecoder: NSCoder) {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Contact {
+class Contact: NSObject, NSCoding {
     
     private var _name: String!
     private var _url: String!
@@ -31,6 +31,25 @@ public class Contact {
     init(name: String, url: String) {
         self._name = name
         self._url = url
+    }
+    
+    
+    //MARK: - NSCoding
+    
+    required convenience init?(coder aDecoder: NSCoder) {
+        guard
+     let name = aDecoder.decodeObjectForKey("name") as? String ,
+            let url = aDecoder.decodeObjectForKey("url") as? String
+            else {
+                return nil
+        }
+        self.init(name: name, url: url)
+        
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(_name, forKey: "name")
+        aCoder.encodeObject(_url, forKey: "url")
     }
     
 }
