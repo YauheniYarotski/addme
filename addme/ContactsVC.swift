@@ -31,8 +31,13 @@ class ContactsVC: UITableViewController {
         , ("Verizon Wireless", "Sponsered")
     ]
     
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 1
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("personsCell2", forIndexPath: indexPath) as! StartCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("sss", forIndexPath: indexPath) as! StartCell
 
 
             cell.name.text = person.name
@@ -43,6 +48,10 @@ class ContactsVC: UITableViewController {
         
         return cell
 
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
     }
     
     

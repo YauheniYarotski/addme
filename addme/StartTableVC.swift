@@ -72,6 +72,8 @@ class StartTableVC: UITableViewController, ContactsVCDelegate {
         
         navigationController?.pushViewController(contactsVC, animated: true)
         
+//        performSegueWithIdentifier("xz", sender: person)
+        
     }
     
     // MARK: - ContactsVCDelegate
@@ -124,6 +126,14 @@ class StartTableVC: UITableViewController, ContactsVCDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+//       if let contactsVC = segue.destinationViewController as? ContactsVC {
+//            contactsVC.sessionManager = sessionManager
+//                    contactsVC.person = person
+//                    contactsVC.delegate = self
+//            //
+//
+//        }
+
     }
     
 }
