@@ -7,6 +7,7 @@ protocol SessionManagerDelegate {
     func didRecivePerson(manager: SessionManager, person: Person)
 //    func didConnectDevice(manage: SessionManager, devicePerson: Person)
     func didDiconectDevice(manage: SessionManager)
+    func didReciveConfirmed(manage: SessionManager)
     
 }
 
@@ -17,7 +18,7 @@ class SessionManager : NSObject {
     let serviceAdvertiser : MCNearbyServiceAdvertiser
     let serviceBrowser : MCNearbyServiceBrowser
     var delegate : SessionManagerDelegate?
-    let me = fackePrsones[SessionManager.randRange(0, upper: fackePrsones.count - 1)]
+    var me = fackePrsones[SessionManager.randRange(0, upper: fackePrsones.count - 1)]
     var outsidePersons = [Person]()
     var timer: NSTimer!
     
@@ -82,6 +83,19 @@ class SessionManager : NSObject {
             var error : NSError?
             do {
                 let data = NSKeyedArchiver.archivedDataWithRootObject(me)
+                try self.session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+            } catch var error1 as NSError {
+                error = error1
+                NSLog("%@", "\(error)")
+            }
+        }
+    }
+    
+    func sendConfirmation() {
+        if session.connectedPeers.count > 0 {
+            var error : NSError?
+            do {
+                let data = NSKeyedArchiver.archivedDataWithRootObject("confimed")
                 try self.session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
             } catch var error1 as NSError {
                 error = error1
@@ -165,6 +179,8 @@ extension SessionManager : MCSessionDelegate {
             if !outsidePersons.contains(person) {
                 outsidePersons.append(person)}
             self.delegate?.didRecivePerson(self, person: person)
+        } else if let confirm = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? String {
+            delegate?.didReciveConfirmed(self)
         }
     }
     

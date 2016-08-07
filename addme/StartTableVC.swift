@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class StartTableVC: UITableViewController, ContactsVCDelegate {
     
@@ -16,6 +17,13 @@ class StartTableVC: UITableViewController, ContactsVCDelegate {
         super.viewDidLoad()
         sessionManager.delegate = self
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+//        sessionManager.sendMyContact()
+    }
+    
     
     //    func loadPersones() {
     //        let person1 = Person(name: "Yauheni Dzemiashkevich", contacts: [Contact(name:"fb", url: "http://facebook.com"), Contact(name:"vk", url: "http://facebook.com")], image: UIImage(named: "avatar"), descriptionName: "iOS Developre at Add Me" )
@@ -80,6 +88,7 @@ class StartTableVC: UITableViewController, ContactsVCDelegate {
     
     func contactsVCDidFinish(contactsVC: ContactsVC) {
         navigationController?.popViewControllerAnimated(true)
+        sessionManager.sendConfirmation()
         tableView.reloadData()
         
     }
@@ -126,13 +135,11 @@ class StartTableVC: UITableViewController, ContactsVCDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-//       if let contactsVC = segue.destinationViewController as? ContactsVC {
-//            contactsVC.sessionManager = sessionManager
-//                    contactsVC.person = person
-//                    contactsVC.delegate = self
-//            //
-//
-//        }
+       if let settingsVC = segue.destinationViewController as? SettingsVC {
+            settingsVC.sessionManager = sessionManager
+            //
+
+        }
 
     }
     
@@ -161,6 +168,18 @@ extension StartTableVC : SessionManagerDelegate {
     func didDiconectDevice(manage: SessionManager) {
         NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
 //            self.tableView.reloadData()
+        }
+    }
+    
+    
+    func didReciveConfirmed(manage: SessionManager) {
+        if sessionManager.outsidePersons.indices.contains(0) {
+        sessionManager.outsidePersons[0].added = true
+        }
+        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+                        self.tableView.reloadData()
+            let systemSoundID: SystemSoundID = 1007
+            AudioServicesPlaySystemSound(systemSoundID)
         }
     }
     

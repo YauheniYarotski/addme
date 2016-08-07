@@ -80,12 +80,60 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="NearBy" id="JsL-29-RZg">
-                        <barButtonItem key="rightBarButtonItem" image="settingssmallIcon" id="t1V-nv-G8T"/>
+                        <barButtonItem key="rightBarButtonItem" image="settingssmallIcon" id="t1V-nv-G8T">
+                            <connections>
+                                <segue destination="71m-UV-vaf" kind="show" id="yBW-ah-2bQ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bSi-4h-0cj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="789.5" y="1187.5"/>
+        </scene>
+        <!--SettingsVC-->
+        <scene sceneID="1r5-3n-wh4">
+            <objects>
+                <viewController id="71m-UV-vaf" customClass="SettingsVC" customModule="addme" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="m40-yJ-5z4"/>
+                        <viewControllerLayoutGuide type="bottom" id="lyM-w0-jwi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="82S-Tq-5pr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dcv-S1-fdB">
+                                <rect key="frame" x="145" y="90" width="97" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="97" id="JXX-8e-EA1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ozb-67-WWq">
+                                <rect key="frame" x="162" y="210" width="35" height="30"/>
+                                <state key="normal" title="done"/>
+                                <connections>
+                                    <action selector="done:" destination="71m-UV-vaf" eventType="touchUpInside" id="Uke-iO-B5y"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Dcv-S1-fdB" firstAttribute="leading" secondItem="82S-Tq-5pr" secondAttribute="leading" constant="145" id="LKy-zN-MnX"/>
+                            <constraint firstItem="Dcv-S1-fdB" firstAttribute="top" secondItem="m40-yJ-5z4" secondAttribute="bottom" constant="26" id="XxE-4v-Nju"/>
+                            <constraint firstItem="ozb-67-WWq" firstAttribute="leading" secondItem="82S-Tq-5pr" secondAttribute="leading" constant="162" id="jCQ-R5-FeI"/>
+                            <constraint firstItem="ozb-67-WWq" firstAttribute="top" secondItem="Dcv-S1-fdB" secondAttribute="bottom" constant="90" id="qPU-AR-ZZq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="row" destination="Dcv-S1-fdB" id="nCH-cv-wld"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9lH-Zc-eMP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1709.5" y="509.5"/>
         </scene>
         <!--InformationVC-->
         <scene sceneID="SO8-m6-GG9">

@@ -20,6 +20,8 @@
 		F7D446FC1D576E79007B96A4 /* ContactsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D446FB1D576E79007B96A4 /* ContactsVC.swift */; };
 		F7D447001D57743B007B96A4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D446FF1D57743B007B96A4 /* ContactCell.swift */; };
 		F7DB9B061D579A3800E03B62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7DB9B051D579A3800E03B62 /* Main.storyboard */; };
+		F7DB9B081D57A1A500E03B62 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DB9B071D57A1A500E03B62 /* AudioToolbox.framework */; };
+		F7DB9B0A1D57A4B900E03B62 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DB9B091D57A4B900E03B62 /* SettingsVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		F7D446FB1D576E79007B96A4 /* ContactsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsVC.swift; sourceTree = "<group>"; };
 		F7D446FF1D57743B007B96A4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		F7DB9B051D579A3800E03B62 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		F7DB9B071D57A1A500E03B62 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F7DB9B091D57A4B900E03B62 /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7DB9B081D57A1A500E03B62 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +59,7 @@
 		F7D446B51D5628A3007B96A4 = {
 			isa = PBXGroup;
 			children = (
+				F7DB9B071D57A1A500E03B62 /* AudioToolbox.framework */,
 				F7D446C01D5628A3007B96A4 /* addme */,
 				F7D446BF1D5628A3007B96A4 /* Products */,
 			);
@@ -88,6 +94,7 @@
 			children = (
 				9813D5D31D5758330042EAF1 /* StartTableVC.swift */,
 				F7D446FB1D576E79007B96A4 /* ContactsVC.swift */,
+				F7DB9B091D57A4B900E03B62 /* SettingsVC.swift */,
 			);
 			name = Controllers;
 			path = addme;
@@ -202,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7DB9B0A1D57A4B900E03B62 /* SettingsVC.swift in Sources */,
 				F7D447001D57743B007B96A4 /* ContactCell.swift in Sources */,
 				9813D5CD1D574E260042EAF1 /* MyInfoCell.swift in Sources */,
 				F7D446C21D5628A3007B96A4 /* AppDelegate.swift in Sources */,
